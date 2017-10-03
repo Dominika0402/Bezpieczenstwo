@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Password">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,19 +17,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Password"
-        android:theme="@style/AppTheme">
-        </activity>
-
         <activity android:name=".Option"
             android:theme="@style/AppTheme">
         </activity>
 
-        <activity android:name=".Message"
+        <activity android:name=".Show"
             android:theme="@style/AppTheme">
         </activity>
 
-        <activity android:name=".Show"
+        <activity android:name=".WriteMessage"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <activity android:name=".ChangePassword"
             android:theme="@style/AppTheme">
         </activity>
     </application>

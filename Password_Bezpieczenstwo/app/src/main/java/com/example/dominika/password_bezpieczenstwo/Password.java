@@ -1,51 +1,55 @@
 package com.example.dominika.password_bezpieczenstwo;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/**
- * Created by Dominika on 03.10.2017.
- */
-
 public class Password extends AppCompatActivity {
 
-    String password2;
+    Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.password);
+        setContentView(R.layout.password_layout);
 
-        Button button = (Button) findViewById(R.id.button2);
-        final EditText password = (EditText) findViewById(R.id.editText3);
-
-        final String newString;
-        /*if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                newString= null;
-            } else {
-                newString= extras.getString("message");
-            }
-        } else {
-            newString= (String) savedInstanceState.getSerializable("message");
-        }*/
+        context = getApplicationContext();
+        Button password = (Button) findViewById(R.id.password_B);
+        final EditText password_et = (EditText) findViewById(R.id.password_ET);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences("preferences_name",
+                        getApplicationContext().MODE_PRIVATE);
+                String value = preferences.getString("password", "");
+                if (value.equals(password_et.getText().toString()))
+                {
+                    Intent intent = new Intent(Password.this, Option.class);
+                    startActivity(intent);
+                }
+                else if (value.equals(""))
+                {
+                    SharedPreferences preferences2 = context.getSharedPreferences("preferences_name", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences2.edit();
+                    editor.putString("password", password_et.getText().toString());
+                    editor.commit();
 
-                password2 = password.getText().toString();
-                Intent intent = new Intent(Password.this, Option.class);
-                //intent.putExtra("message", newString);
-                intent.putExtra("password", password2);
-                startActivity(intent);
+                    Intent intent = new Intent(Password.this, WriteMessage.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "BLAD", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

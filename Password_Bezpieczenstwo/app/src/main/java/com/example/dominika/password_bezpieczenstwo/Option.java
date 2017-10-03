@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -24,57 +25,34 @@ public class Option extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.option);
+        setContentView(R.layout.option_layout);
 
-        final String text1 = "String";
-
-
-        Button odczytaj = (Button) findViewById(R.id.button4);
-        Button zmien_haslo = (Button) findViewById(R.id.button5);
+        Button new_message = (Button) findViewById(R.id.new_message);
+        Button change_pass = (Button) findViewById(R.id.change_pass);
+        Button show_message = (Button) findViewById(R.id.show_mess);
 
 
-        final String newString;
-        final String newString2;
-
-        String password2;
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                newString= null;
-                newString2= null;
-            } else {
-                //newString= extras.getString("message");
-                newString2= extras.getString("password");
-            }
-        } else {
-            //newString= (String) savedInstanceState.getSerializable("message");
-            newString2= (String) savedInstanceState.getSerializable("password");
-        }
-
-
-        odczytaj.setOnClickListener(new View.OnClickListener() {
+        new_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Option.this, Show.class);
-                //intent.putExtra("message", newString);
-                intent.putExtra("password", newString2);
-
-                if(newString2.equals("domi")) {
-                    startActivity(intent);
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "BLAD",
-                            Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(Option.this, WriteMessage.class);
+                startActivity(intent);
             }
         });
 
-        zmien_haslo.setOnClickListener(new View.OnClickListener() {
+        change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Option.this, ChangePassword.class);
+                startActivity(intent);
+            }
+        });
 
+        show_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Option.this, Show.class);
+                startActivity(intent);
             }
         });
     }
